@@ -28,7 +28,7 @@ final class RejectedPromise implements PromiseInterface
             return;
         }
 
-//        var_dump ($this->reason);
+        var_dump (get_class($this->reason));
     }
 
     public function then(callable $onFulfilled = null, callable $onRejected = null): PromiseInterface
