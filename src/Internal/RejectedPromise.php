@@ -15,10 +15,20 @@ use function React\Promise\resolve;
 final class RejectedPromise implements PromiseInterface
 {
     private $reason;
+    private $handled = false;
 
     public function __construct(\Throwable $reason)
     {
         $this->reason = $reason;
+    }
+
+    public function __destruct()
+    {
+        if ($this->handled) {
+            return;
+        }
+
+        var_dump ($this->reason);
     }
 
     public function then(callable $onFulfilled = null, callable $onRejected = null): PromiseInterface
@@ -26,6 +36,8 @@ final class RejectedPromise implements PromiseInterface
         if (null === $onRejected) {
             return $this;
         }
+
+        $this->handled = true;
 
         return new Promise(function (callable $resolve, callable $reject) use ($onRejected): void {
             enqueue(function () use ($resolve, $reject, $onRejected): void {
