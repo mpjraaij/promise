@@ -28,7 +28,7 @@ final class RejectedPromise implements PromiseInterface
             return;
         }
 
-        echo $this->reason->getFile() . ':' . $this->reasion->getLine() . ': ' . $this->reason->getMessage() . PHP_EOL;
+        echo $this->reason->getFile() . ':' . $this->reason->getLine() . ': ' . $this->reason->getMessage() . PHP_EOL;
     }
 
     public function then(callable $onFulfilled = null, callable $onRejected = null): PromiseInterface
