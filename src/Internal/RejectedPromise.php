@@ -29,7 +29,13 @@ final class RejectedPromise implements PromiseInterface
         }
 
         echo $this->reason->getFile() . ':' . $this->reason->getLine() . ': ' . $this->reason->getMessage() . PHP_EOL;
-        echo 'Previous: ' . $this->reason->getPrevious()->getFile() . ':' . $this->reason->getPrevious()->getLine() . ': ' . $this->reason->getPrevious()->getMessage() . PHP_EOL;
+
+        $previous = $this->reason->getPrevious();
+
+        if (! $previous) {
+            return;
+        }
+        echo 'Previous: ' . $previous->getFile() . ':' . $previous->getLine() . ': ' . $previous->getMessage() . PHP_EOL;
     }
 
     public function then(callable $onFulfilled = null, callable $onRejected = null): PromiseInterface
