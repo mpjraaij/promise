@@ -28,7 +28,16 @@ final class RejectedPromise implements PromiseInterface
             return;
         }
 
+        if (preg_match('/Resolver.php/i', $this->reason->getFile()) && $this->reason->getLine() == 85) {
+            return;
+        }
+
         echo $this->reason->getFile() . ':' . $this->reason->getLine() . ': ' . $this->reason->getMessage() . PHP_EOL;
+
+        $previous = $this->reason->getPrevious();
+        if ($previous) {
+            echo 'Previous: ' . $previous->getFile() . ':' . $previous->getLine() . ': ' . $previous->getMessage() . PHP_EOL;
+        }
     }
 
     public function then(callable $onFulfilled = null, callable $onRejected = null): PromiseInterface
